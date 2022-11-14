@@ -4,7 +4,7 @@
 #                                                                             
 # PROGRAMMER: John Mark Bulabos
 # DATE CREATED: 10/11/2022                 
-# REVISED DATE: 
+# REVISED DATE: 13/11/2022
 # PURPOSE: Create a function classify_images that uses the classifier function 
 #          to create the classifier labels and then compares the classifier 
 #          labels to the pet image labels. This function inputs:
@@ -68,13 +68,11 @@ def classify_images(images_dir, results_dic, model):
            None - results_dic is mutable data type so no return needed.         
     """
     for key in results_dic:
-        model_label = classifier(os.path.join(images_dir,key),model)
-        if results_dic[key][0] in model_label.lower():
-            results_dic[key].append(model_label)
-            results_dic[key].append(1)
+        model_label = classifier(os.path.join(images_dir,key),model).lower().strip()
+        if results_dic[key][0] in model_label:
+            results_dic[key].extend((model_label, 1))
             
         else:
-            results_dic[key].append(model_label)
-            results_dic[key].append(0)        
+            results_dic[key].extend((model_label, 0))      
             
     None
